@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
 
 import Formulario from "./components/Formulario/Formulario";
 import Header from "./components/Header/Header";
