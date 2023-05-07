@@ -61,13 +61,13 @@ const Formulario = (props) => {
       );
       props.setPacientes(pacientesActualizados);
       props.setPaciente({});
-      toast.success("¡Paciente editado exitosamente!");
+      toast.success("Cita editada exitosamente!");
     } else {
       // Nuevo registro
       objetoPaciente.id = GenerarID();
       if (!props.pacientes) props.setPacientes([]);
       props.setPacientes([...props.pacientes, objetoPaciente]);
-      toast.success("¡Paciente agregado exitosamente!");
+      toast.success("Cita agregada exitosamente!");
     }
     formReset();
   };
