@@ -57,11 +57,8 @@ const Formulario = (props) => {
       // Nuevo registro
       objetoPaciente.id = generarId();
       if (!props.pacientes) props.setPacientes([]);
-      console.log("objetoPaciente", objetoPaciente);
-      console.log("props.pacientes desde Formulario.jsx", props.pacientes);
       props.setPacientes([...props.pacientes, objetoPaciente]);
       toast.success("Cita creada exitosamente!");
-      console.log("pacientes", pacientes);
     }
 
     // Reiniciar el formulario

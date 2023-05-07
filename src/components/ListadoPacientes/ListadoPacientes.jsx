@@ -3,7 +3,6 @@ import Paciente from "../Paciente/Paciente";
 
 Paciente;
 const ListadoPacientes = (props) => {
-  console.log("props.pacientes desde ListadoPacientes.jsx", props.pacientes);
   return (
     <div className="md:w-1/2 lg:w-3/5 md:h-screen overflow-y-auto">
       {props.pacientes && props.pacientes.length > 0 ? (
