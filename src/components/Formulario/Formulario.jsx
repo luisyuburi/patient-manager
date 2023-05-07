@@ -56,6 +56,7 @@ const Formulario = (props) => {
     } else {
       // Nuevo registro
       objetoPaciente.id = generarId();
+      if (!props.pacientes) props.setPacientes([]);
       console.log("objetoPaciente", objetoPaciente);
       console.log("props.pacientes desde Formulario.jsx", props.pacientes);
       props.setPacientes([...props.pacientes, objetoPaciente]);
