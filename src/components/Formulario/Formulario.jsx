@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import Alert from "../Alert/Alert";
+import { GenerarID } from "../../utilities/GenerateID/GenerateID";
+GenerarID;
 const Formulario = (props) => {
   const [nombre, setNombre] = useState("");
   const [propietario, setPropietario] = useState("");
@@ -18,24 +20,24 @@ const Formulario = (props) => {
     }
   }, [props.paciente]);
 
-  const generarId = () => {
-    const random = Math.random().toString(36).substring(2);
-    const fecha = Date.now().toString(36);
+  const onCancelEdit = () => {
+    props.setPaciente({});
+    formReset();
+  };
 
-    return random + fecha;
+  // Reiniciar el formulario
+  const formReset = () => {
+    setNombre("");
+    setEmail("");
+    setFecha("");
+    setPropietario("");
+    setSintomas("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validacion del formulario
-    if ([nombre, propietario, email, fecha, sintomas].includes("")) {
-      toast.error("Todos los campos son obligatorios");
-      return;
-    }
-
     // Objeto de paciente
-
     const objetoPaciente = {
       nombre,
       propietario,
@@ -43,6 +45,12 @@ const Formulario = (props) => {
       fecha,
       sintomas,
     };
+
+    // Validacion del formulario
+    if ([nombre, propietario, email, fecha, sintomas].includes("")) {
+      toast.error("¡Todos los campos son obligatorios!");
+      return;
+    }
 
     if (props.paciente.id) {
       // Editando el registro
@@ -55,18 +63,12 @@ const Formulario = (props) => {
       props.setPaciente({});
     } else {
       // Nuevo registro
-      objetoPaciente.id = generarId();
+      objetoPaciente.id = GenerarID();
       if (!props.pacientes) props.setPacientes([]);
       props.setPacientes([...props.pacientes, objetoPaciente]);
-      toast.success("Cita creada exitosamente!");
+      toast.success("¡Paciente agregado exitosamente!");
     }
-
-    // Reiniciar el formulario
-    setNombre("");
-    setEmail("");
-    setFecha("");
-    setPropietario("");
-    setSintomas("");
+    formReset();
   };
 
   return (
@@ -164,8 +166,15 @@ const Formulario = (props) => {
         <input
           type="submit"
           className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-          value={props.paciente.id ? "Editar Paciente" : "Agregar Paciente"}
+          value={props.paciente.id ? "Guardar cambios" : "Agregar Paciente"}
         />
+        {props.paciente.id && (
+          <input
+            onClick={onCancelEdit}
+            className="bg-red-700 w-full p-3 text-white uppercase font-bold hover:bg-red-800 cursor-pointer transition-colors mt-1 text-center"
+            value={"Cancelar"}
+          />
+        )}
       </form>
     </div>
   );
