@@ -61,6 +61,7 @@ const Formulario = (props) => {
       );
       props.setPacientes(pacientesActualizados);
       props.setPaciente({});
+      toast.success("¡Paciente editado exitosamente!");
     } else {
       // Nuevo registro
       objetoPaciente.id = GenerarID();
