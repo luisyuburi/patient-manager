@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import toast, { Toaster } from "react-hot-toast";
 import Formulario from "./components/Formulario/Formulario";
 import Header from "./components/Header/Header";
 import ListadoPacientes from "./components/ListadoPacientes/ListadoPacientes";
@@ -14,6 +14,10 @@ function App() {
   }, [pacientes]);
 
   const eliminarPaciente = (id) => {
+    // En caso de que queramos deshacer la acción mas adelante
+    // const pacienteEliminado = pacientes.find((element) => element.id === id);
+
+    toast.success(`¡Cita eliminada exitosamente!`);
     const pacientesActualizados = pacientes.filter(
       (element) => element.id !== id
     );
