@@ -81,6 +81,7 @@ const Form = (props: FormProps) => {
       };
       props.onEdit(newAppointment);
       formReset();
+      props.onCancel();
     }
   };
 
@@ -184,12 +185,14 @@ const Form = (props: FormProps) => {
               ? "Guardar cambios"
               : "Agregar Cita"
           }
+          readOnly
         />
         {props.selectedAppointment !== null && (
           <input
             onClick={onCancelEdit}
             className="bg-red-700 w-full p-3 text-white uppercase font-bold hover:bg-red-800 cursor-pointer transition-colors mt-1 text-center"
             value={"Cancelar"}
+            readOnly
           />
         )}
       </form>
