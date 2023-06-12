@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1683759255860" clover="3.2.0">
+  <project timestamp="1683759255860" name="All files">
+    <metrics statements="21" coveredstatements="12" conditionals="2" coveredconditionals="1" methods="7" coveredmethods="1" elements="30" coveredelements="14" complexity="0" loc="21" ncloc="21" packages="2" files="2" classes="2"/>
+    <package name="appointments.components">
+      <metrics statements="10" coveredstatements="7" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="1"/>
+      <file name="Appointment.tsx" path="/home/luisyubu23/Documentos/projects/patient-booking-manager/src/appointments/components/Appointment.tsx">
+        <metrics statements="10" coveredstatements="7" conditionals="2" coveredconditionals="1" methods="4" coveredmethods="1"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="22" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="68" count="0" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="utilities.Modal">
+      <metrics statements="11" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+      <file name="Modal.tsx" path="/home/luisyubu23/Documentos/projects/patient-booking-manager/src/utilities/Modal/Modal.tsx">
+        <metrics statements="11" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="79" count="0" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
