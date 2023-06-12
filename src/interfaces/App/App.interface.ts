@@ -8,4 +8,4 @@ export interface IPatient {
   symptoms: string;
 }
 
-export interface IPatients extends Array<IPatient> {}
+export type IPatients = Array<IPatient>;

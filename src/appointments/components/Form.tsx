@@ -2,25 +2,36 @@ import React, { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { IPatient } from "../../interfaces/App/App.interface";
 import { GenerarID } from "../../utilities/GenerateID/GenerateID";
-const Form = (props: any) => {
-  const [name, setName] = useState<IPatient["name"]>("");
-  const [owner, setOwner] = useState<IPatient["owner"]>("");
-  const [email, setEmail] = useState<IPatient["email"]>("");
-  const [date, setDate] = useState<IPatient["date"]>(null);
-  const [symptoms, setSymptoms] = useState<IPatient["symptoms"]>("");
+import { Appointment, AppointmentRecord } from "../entities/appointment";
+
+interface FormProps {
+  selectedAppointment: AppointmentRecord | null;
+  onCancel: () => void;
+  onSave: (appointment: Appointment) => void;
+  onEdit: (appointment: AppointmentRecord) => void;
+}
+
+const Form = (props: FormProps) => {
+  const [name, setName] = useState<Appointment["patient"]["name"]>("");
+  const [responsible, setResponsible] =
+    useState<Appointment["responsible"]["name"]>("");
+  const [email, setEmail] = useState<Appointment["responsible"]["email"]>("");
+  const [date, setDate] = useState<Appointment["date"]>(new Date());
+  const [symptoms, setSymptoms] =
+    useState<Appointment["patient"]["symptoms"]>("");
 
   useEffect(() => {
-    if (Object.keys(props.patient).length > 0) {
-      setName(props.patient.name);
-      setOwner(props.patient.owner);
-      setEmail(props.patient.email);
-      setSymptoms(props.patient.symptoms);
-      setDate(props.patient.date);
+    if (props.selectedAppointment !== null) {
+      setName(props.selectedAppointment.patient.name);
+      setResponsible(props.selectedAppointment.responsible.name);
+      setEmail(props.selectedAppointment.responsible.email);
+      setSymptoms(props.selectedAppointment.patient.symptoms);
+      setDate(props.selectedAppointment.date);
     }
-  }, [props.patient]);
+  }, [props.selectedAppointment]);
 
   const onCancelEdit = () => {
-    props.setPatient({});
+    props.onCancel();
     formReset();
   };
 
@@ -28,47 +39,49 @@ const Form = (props: any) => {
   const formReset = () => {
     setName("");
     setEmail("");
-    setDate(null);
-    setOwner("");
+    setDate(new Date());
+    setResponsible("");
     setSymptoms("");
   };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-
-    // Objeto de patient
-    const objetoPaciente: IPatient = {
-      name,
-      owner,
-      email,
-      date,
-      symptoms,
-    };
-
     // Validacion del formulario
-    if ([name, owner, email, date, symptoms].includes("")) {
+    if ([name, responsible, email, date, symptoms].includes("")) {
       toast.error("¡Todos los campos son obligatorios!");
       return;
     }
-
-    if (props.patient.id) {
-      // Editando el registro
-      objetoPaciente.id = props.patient.id;
-
-      const pacientesActualizados = props.patients.map((element: IPatient) =>
-        element.id === props.patient.id ? objetoPaciente : element
-      );
-      props.setPatients(pacientesActualizados);
-      props.setPatient({});
-      toast.success("Cita editada exitosamente!");
+    if (props.selectedAppointment === null) {
+      const newAppointment: Appointment = {
+        patient: {
+          name,
+          symptoms,
+        },
+        responsible: {
+          name: responsible,
+          email,
+          patients: null,
+        },
+        date,
+      };
+      props.onSave(newAppointment);
     } else {
-      // Nuevo registro
-      objetoPaciente.id = GenerarID();
-      if (!props.patients) props.setPatients([]);
-      props.setPatients([...props.patients, objetoPaciente]);
-      toast.success("Cita agregada exitosamente!");
+      const newAppointment: AppointmentRecord = {
+        patient: {
+          name,
+          symptoms,
+        },
+        responsible: {
+          name: responsible,
+          email,
+          patients: null,
+        },
+        date,
+        id: props.selectedAppointment.id,
+      };
+      props.onEdit(newAppointment);
+      formReset();
     }
-    formReset();
   };
 
   return (
@@ -103,17 +116,17 @@ const Form = (props: any) => {
         </div>
         <div className="mb-5">
           <label
-            htmlFor="owner"
+            htmlFor="responsible"
             className="block text-gray-700 uppercase font-bold"
           >
             Nompre Propietario
           </label>
           <input
-            id="owner"
+            id="responsible"
             type="text"
             placeholder="Nombre del Propietario"
-            value={owner}
-            onChange={(e) => setOwner(e.target.value)}
+            value={responsible}
+            onChange={(e) => setResponsible(e.target.value)}
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
           />
         </div>
@@ -166,9 +179,13 @@ const Form = (props: any) => {
         <input
           type="submit"
           className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-          value={props.patient.id ? "Guardar cambios" : "Agregar Cita"}
+          value={
+            props.selectedAppointment !== null
+              ? "Guardar cambios"
+              : "Agregar Cita"
+          }
         />
-        {props.patient.id && (
+        {props.selectedAppointment !== null && (
           <input
             onClick={onCancelEdit}
             className="bg-red-700 w-full p-3 text-white uppercase font-bold hover:bg-red-800 cursor-pointer transition-colors mt-1 text-center"
